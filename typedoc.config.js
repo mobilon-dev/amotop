@@ -1,4 +1,4 @@
-const gitRepoUrl = 'http://redmine.mobilon.ru:5000/amoCrm/amotop';
+const gitRepoUrl = 'https://github.com/mobilon-org/amotop';
 
 module.exports = {
   entryPoints: [
@@ -11,7 +11,7 @@ module.exports = {
     "invalidLink": true,
     "notDocumented": false
   },
-  sourceLinkTemplate: `${gitRepoUrl}/files/tip/{path}#L{line}`,
+  sourceLinkTemplate: `${gitRepoUrl}/blob/main/{path}#L{line}`,
   includeVersion: true,
   sourceLinkExternal: true,
   // categorizeByGroup: true,
