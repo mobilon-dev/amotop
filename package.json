@@ -2,6 +2,7 @@
   "name": "@mobilon-org/amotop",
   "version": "0.1.36",
   "main": "dist/index",
+  "types": "types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
@@ -10,7 +11,8 @@
     "docs:build": "npx typedoc",
     "docs:view": "http-server ./docs/",
     "docs": "npm run docs:build && npm run docs:view",
-    "lint-fix": "npx eslint --fix ./src"
+    "lint-fix": "npx eslint --fix ./src",
+    "types:build": "npx tsc src/*.ts --declaration --allowJs --emitDeclarationOnly --outDir types"
   },
   "author": "",
   "license": "ISC",
