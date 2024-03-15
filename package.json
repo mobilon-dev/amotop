@@ -1,6 +1,6 @@
 {
   "name": "@mobilon-org/amotop",
-  "version": "0.1.36",
+  "version": "0.1.37",
   "main": "dist/index",
   "types": "types/index.d.ts",
   "scripts": {
@@ -23,7 +23,7 @@
     "jwt-decode": "^4.0.0"
   },
   "devDependencies": {
-    "@types/node": "^20.11.27",
+    "@types/node": "^20.11.28",
     "eslint": "^8.57.0",
     "http-server": "^14.1.1",
     "typedoc": "^0.25.12",
