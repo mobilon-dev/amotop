@@ -1,12 +1,14 @@
 # @mobilon-org/amotop
 
-@mobilon-org/amotop - yet another AmoCRM client for nodejs
-
+@mobilon-org/amotop - еще один amoCRM API клиент для node.js
 
 [Репозиторий](https://github.com/mobilon-org/amotop)
 
 [Документация](https://mobilon-org.github.io/amotop/)
 
+## Зачем?
+
+Простой клиент-обертка на API amoCRM, чтобы помочь коллеге быстро разобраться с концепцией amoCRM и начать приносить пользу.
 
 ## Установка
 
@@ -34,27 +36,32 @@ const response = await amoJoScopeClient.sendMessage(message);
 
 `````
 
-## AmoService (domain)
+## Концепция
+
+![](images/scheme.jpg)
+
+### AmoService (domain)
 
 - для обмена токенов
 
-## AmoApiClient (domain, accessToken)
+### AmoApiClient (domain, accessToken)
 
 - для взаимодействия с AmoCRM API
 
-## AmoFileClient (accessToken)
+### AmoFileClient (accessToken)
 
 - для взаимодействия с File API AmoCRM
 
-## AmoJoChannelClient (channelId, channelSecret)
+### AmoJoChannelClient (channelId, channelSecret)
 
 - для работы с каналом Чат API AmoCRM: создавать/удалять подключения
 
-## AmoJoScopeClient (scopeId, channelSecret)
+### AmoJoScopeClient (scopeId, channelSecret)
 
 - для работы с конкретным подключением чата к интеграции Чат API AmoCRM
 
-# amoCRM API
+
+## amoCRM API
 
 [amo API](https://www.amocrm.ru/developers/content/crm_platform/api-reference)
 

@@ -9,3 +9,4 @@ typedoc.config.js
 .eslintrc.js
 Dockerfile
 Jenkinsfile
+images
