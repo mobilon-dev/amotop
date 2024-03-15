@@ -8,6 +8,32 @@
 [Документация](https://mobilon-org.github.io/amotop/)
 
 
+## Установка
+
+`````
+npm i @mobilon-org/amotop
+
+`````
+
+## Использование
+
+`````javascript
+
+const {AmoJoScopeClient, AmoApiClient} = require('@mobilon-org/amotop');
+
+const {debug, scopeId, channelSecret, domain, accessToken} = require('../_config');
+
+const amoJoScopeClient = new AmoJoScopeClient({scopeId, channelSecret, debug});
+const amoApiClient = new AmoApiClient(domain, accessToken, {debug});
+
+// получаем сделки
+const leads = await amoApiClient.getLeads({page: 2, limit: 20});
+
+// отправляем сообщение в чат
+const response = await amoJoScopeClient.sendMessage(message);
+
+`````
+
 ## AmoService (domain)
 
 - для обмена токенов
