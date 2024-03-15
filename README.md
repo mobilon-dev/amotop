@@ -2,6 +2,12 @@
 
 @mobilon-org/amotop - yet another AmoCRM client for nodejs
 
+
+[Репозиторий](https://github.com/mobilon-org/amotop)
+
+[Документация](https://mobilon-org.github.io/amotop/)
+
+
 ## AmoService (domain)
 
 - для обмена токенов
