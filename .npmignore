@@ -1,0 +1,11 @@
+src
+docs
+samples
+playbook.yml
+tsconfig.json
+typedoc.config.js 
+*.sh
+.editorconfig
+.eslintrc.js
+Dockerfile
+Jenkinsfile

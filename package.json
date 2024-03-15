@@ -1,0 +1,31 @@
+{
+  "name": "@mobilon-org/amotop",
+  "version": "0.1.36",
+  "main": "dist/index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "sample": "npm run build && node samples/index",
+    "watch": "tsc --watch",
+    "docs:build": "npx typedoc",
+    "docs:view": "http-server ./docs/",
+    "docs": "npm run docs:build && npm run docs:view",
+    "lint-fix": "npx eslint --fix ./src"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "axios-logger": "^2.8.0",
+    "form-urlencoded": "^6.1.4",
+    "jwt-decode": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.27",
+    "eslint": "^8.57.0",
+    "http-server": "^14.1.1",
+    "typedoc": "^0.25.12",
+    "typescript": "^5.4.2",
+    "typescript-eslint": "^7.2.0"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "rootDir": "src",
+    "module": "commonjs",
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": false,
+    "resolveJsonModule": true,
+    "outDir": "dist",
+    "types": ["node"],
+    "lib": ["ES2015"]
+  }
+}
