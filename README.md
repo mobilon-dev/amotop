@@ -40,7 +40,7 @@ const amoJoScopeClient = new AmoJoScopeClient({scopeId, channelSecret, debug});
 const amoApiClient = new AmoApiClient(domain, accessToken, {debug});
 
 // получаем сделки
-const leads = await amoApiClient.getLeads({page: 2, limit: 20});
+const leads = await amoApiClient.getLeads({limit: 20});
 
 // отправляем сообщение в чат
 const response = await amoJoScopeClient.sendMessage(message);
