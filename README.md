@@ -1,10 +1,10 @@
-# @mobilon-org/amotop
+# @mobilon-dev/amotop
 
-@mobilon-org/amotop - еще один amoCRM API клиент для node.js
+@mobilon-dev/amotop - еще один amoCRM API клиент для node.js
 
-[Репозиторий](https://github.com/mobilon-org/amotop)
+[Репозиторий](https://github.com/mobilon-dev/amotop)
 
-[Документация](https://mobilon-org.github.io/amotop/)
+[Документация](https://mobilon-dev.github.io/amotop/)
 
 [Примеры](samples)
 
@@ -24,7 +24,7 @@
 ## Установка
 
 `````
-npm i @mobilon-org/amotop
+npm i @mobilon-dev/amotop
 
 `````
 
@@ -32,7 +32,7 @@ npm i @mobilon-org/amotop
 
 `````javascript
 
-const {AmoJoScopeClient, AmoApiClient} = require('@mobilon-org/amotop');
+const {AmoJoScopeClient, AmoApiClient} = require('@mobilon-dev/amotop');
 
 const {debug, scopeId, channelSecret, domain, accessToken} = require('../_config');
 

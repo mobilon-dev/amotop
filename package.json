@@ -1,5 +1,5 @@
 {
-  "name": "@mobilon-org/amotop",
+  "name": "@mobilon-dev/amotop",
   "version": "0.1.37",
   "main": "dist/index",
   "types": "types/index.d.ts",
