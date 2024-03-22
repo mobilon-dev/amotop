@@ -9,4 +9,6 @@ export declare class AmoFileClient {
     hasFilesScope(): boolean;
     hasFilesDeleteScope(): boolean;
     getFileByUUID(uuid: string): Promise<any>;
+    createSession(params: any): Promise<any>;
+    uploadFilePart(uploadUrl: string, data: any): Promise<any>;
 }

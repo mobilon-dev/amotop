@@ -359,6 +359,24 @@ export class AmoApiClient {
   }
 
   /**
+  * @group Contacts
+  */
+  async linkFileToContact(fileUUID: string, contactId: number) {
+    const url = `/api/v4/contacts/${contactId}/files`;
+    const response = await this.axios.put(url, [{file_uuid: fileUUID}]);
+    return  response.data;
+  }
+
+  /**
+  * @group Contacts
+  */
+  async linkFileToLead(fileUUID: string, leadId: number) {
+    const url = `/api/v4/leads/${leadId}/files`;
+    const response = await this.axios.put(url, [{file_uuid: fileUUID}]);
+    return  response.data;
+  }
+
+  /**
   * @group Companies
   */
   async getCompanies (params: any) {

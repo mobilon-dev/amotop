@@ -5,7 +5,7 @@ const {domain, accessToken, debug} = require('./_config');
 
 const amoApiClient = new AmoApiClient(domain, accessToken, {debug});
 
-const fieldCode = '3061107-73139243-21062433';
+const fieldCode = 'MOBILON_TELEGRAM_NICKNAME';
 
 const isExistFieldAndFilledNickname = (contact) => {
   const telegramCFV = contact.custom_fields_values.find(f => f.field_code === fieldCode);

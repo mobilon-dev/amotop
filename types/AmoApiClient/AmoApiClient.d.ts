@@ -128,6 +128,14 @@ export declare class AmoApiClient {
     */
     attachChatToContact(chatId: string, contactId: number): Promise<any>;
     /**
+    * @group Contacts
+    */
+    linkFileToContact(fileUUID: string, contactId: number): Promise<any>;
+    /**
+    * @group Contacts
+    */
+    linkFileToLead(fileUUID: string, leadId: number): Promise<any>;
+    /**
     * @group Companies
     */
     getCompanies(params: any): Promise<any>;

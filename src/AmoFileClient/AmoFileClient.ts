@@ -63,5 +63,23 @@ export class AmoFileClient {
     const response = await this.instance.get(url);
     return response.data;
   }
+
+  async createSession(params: any) {
+    const url = '/v1.0/sessions';
+
+    const data = {
+      file_name: params.fileName,
+      file_size: params.fileSize,
+      content_type: params.contentType,
+      with_preview: true,
+    }
+    const response = await this.instance.post(url, data);
+    return response.data;
+  }
+
+  async uploadFilePart(uploadUrl: string, data: any) {
+    const response = await this.instance.post(uploadUrl, data);
+    return response.data;
+  }
 }
 
