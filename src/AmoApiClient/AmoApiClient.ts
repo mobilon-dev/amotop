@@ -313,6 +313,15 @@ export class AmoApiClient {
 
   /**
   * @group Contacts
+  * @see 
+  */
+  async addContactsCustomFields (fields: any[]) {
+    const url = `/api/v4/contacts/custom_fields`;
+    return (await this.axios.post(url, fields)).data;
+  }
+
+  /**
+  * @group Contacts
   */
   async updateContact(id: number, data: object) {
     const url = `/api/v4/contacts/${id}`;

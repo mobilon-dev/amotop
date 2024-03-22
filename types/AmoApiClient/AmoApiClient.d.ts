@@ -108,6 +108,11 @@ export declare class AmoApiClient {
     getContactsCustomFieldGroupById(groupId: string): Promise<any>;
     /**
     * @group Contacts
+    * @see
+    */
+    addContactsCustomFields(fields: any[]): Promise<any>;
+    /**
+    * @group Contacts
     */
     updateContact(id: number, data: object): Promise<any>;
     /**
