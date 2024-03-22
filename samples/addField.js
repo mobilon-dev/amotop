@@ -5,11 +5,9 @@ const {domain, accessToken, debug} = require('./_config');
 
 const amoApiClient = new AmoApiClient(domain, accessToken, {debug});
 
-// mobilon-telegram-nickname = 3061107-73139243-21062433  (типа numberic leet)
-
 const start = async () => {
 
-  const fieldCode = '3061107-73139243-21062433';  //рандомный числовой код
+  const fieldCode = 'MOBILON_TELEGRAM_NICKNAME';  // большими буквами или цифрами
   
   const contactsResponse = await amoApiClient.getContactsCustomFields();
   console.log('contactsResponse', JSON.stringify(contactsResponse, null, 2));
