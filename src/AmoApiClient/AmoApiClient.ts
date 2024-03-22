@@ -368,7 +368,7 @@ export class AmoApiClient {
   }
 
   /**
-  * @group Contacts
+  * @group Leads
   */
   async linkFileToLead(fileUUID: string, leadId: number) {
     const url = `/api/v4/leads/${leadId}/files`;
