@@ -13,6 +13,13 @@ export declare class AmoApiClient {
     */
     setWebhook(params: WebhookParams): Promise<any>;
     /**
+    * список возможных событий
+    * зафиксирован в коде (необходимо эпизодически сверяться с документацией на актуальность)
+    * @group Webhooks
+    * @see https://www.amocrm.ru/developers/content/crm_platform/webhooks-api#webhooks-available-actions
+    */
+    getWebhookEvents(): string[];
+    /**
     * @group Webhooks
     */
     deleteWebhook({ destination }: any): Promise<any>;

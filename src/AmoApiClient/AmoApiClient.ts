@@ -74,6 +74,49 @@ export class AmoApiClient {
   }
 
   /**
+  * список возможных событий
+  * зафиксирован в коде (необходимо эпизодически сверяться с документацией на актуальность)
+  * @group Webhooks
+  * @see https://www.amocrm.ru/developers/content/crm_platform/webhooks-api#webhooks-available-actions
+  */
+  getWebhookEvents() {
+    return [
+      'responsible_lead',
+      'responsible_contact',
+      'responsible_company',
+      'responsible_customer',
+      'responsible_task',
+      'restore_lead',
+      'restore_contact',
+      'restore_company',
+      'add_lead',
+      'add_contact',
+      'add_company',
+      'add_customer',
+      'add_talk',
+      'add_task',
+      'update_lead',
+      'update_contact',
+      'update_company',
+      'update_customer',
+      'update_talk',
+      'update_task',
+      'delete_lead',
+      'delete_contact',
+      'delete_company',
+      'delete_customer',
+      'delete_task',
+      'status_lead',
+      'responsible_lead',
+      'note_lead',
+      'note_contact',
+      'note_company',
+      'note_customer',
+      'add_chat_template_review',
+    ];
+  }
+
+  /**
   * @group Webhooks
   */
   async deleteWebhook({destination}: any) {

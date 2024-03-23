@@ -5,7 +5,8 @@
   "types": "types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc & npm run types:build",
+    "build": "npm run code:build & npm run types:build & npm run docs:build",
+    "code:build": "tsc",
     "sample": "npm run build && node samples/index",
     "watch": "tsc --watch",
     "docs:build": "npx typedoc",
