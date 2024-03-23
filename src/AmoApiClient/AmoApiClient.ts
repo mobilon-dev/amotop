@@ -369,11 +369,31 @@ export class AmoApiClient {
   /**
   * @group Contacts
   */
+  async getContactFiles(contactId: number) {
+    const url = `/api/v4/contacts/${contactId}/files`;
+    const response = await this.axios.get(url);
+    return  response.data;
+  }
+
+  /**
+  * @group Leads
+  */
+  async getLeadFiles(leadId: number) {
+    const url = `/api/v4/leads/${leadId}/files`;
+    const response = await this.axios.get(url);
+    return  response.data;
+  }
+
+  /**
+  * @group Contacts
+  */
   async linkFileToContact(fileUUID: string, contactId: number) {
     const url = `/api/v4/contacts/${contactId}/files`;
     const response = await this.axios.put(url, [{file_uuid: fileUUID}]);
     return  response.data;
   }
+
+  
 
   /**
   * @group Leads
