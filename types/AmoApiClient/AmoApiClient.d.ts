@@ -315,10 +315,17 @@ export declare class AmoApiClient {
     appendTagsToLead(entityId: number, tags: Tag[]): Promise<any>;
     /**
     * @group Unsorted
+    * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-list
     */
     getUnsorted(paramsIn: any): Promise<any>;
     /**
     * @group Unsorted
+    * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-summary
+    */
+    getUnsortedSummary(): Promise<any>;
+    /**
+    * @group Unsorted
+    * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-detail
     */
     getUnsortedByUID(uid: string): Promise<any>;
 }

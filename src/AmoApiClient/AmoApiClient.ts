@@ -838,6 +838,7 @@ export class AmoApiClient {
 
   /**
   * @group Unsorted
+  * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-list
   */
   async getUnsorted (paramsIn: any) {
     const page = paramsIn?.page ? paramsIn?.page : 1;
@@ -849,6 +850,16 @@ export class AmoApiClient {
 
   /**
   * @group Unsorted
+  * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-summary
+  */
+  async getUnsortedSummary () {
+    const url = `/api/v4/leads/unsorted/summary`;
+    return (await this.axios.get(url)).data;
+  }
+
+  /**
+  * @group Unsorted
+  * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-detail
   */
   async getUnsortedByUID (uid: string) {
     const url = `/api/v4/leads/unsorted/${uid}`;

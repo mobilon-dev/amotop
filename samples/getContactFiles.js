@@ -14,7 +14,7 @@ const start = async () => {
     const session3 = await amoApiClient.getContactFiles(contactId);
     console.log('session3', JSON.stringify(session3, null, 2));
 
-    // связка со сделкой
+    // получаем список файлов сделки
     const session4 = await amoApiClient.getLeadFiles(leadId);
     console.log('session4', JSON.stringify(session4, null, 2));
   } catch (err) {
