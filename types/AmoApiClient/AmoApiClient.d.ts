@@ -42,6 +42,26 @@ export declare class AmoApiClient {
     /**
     * @group Leads
     */
+    getBaseLeadPayload(name: string, price: number, createdBy?: number): {
+        name: string;
+        created_by: number;
+        price: number;
+    };
+    /**
+    * @group Leads
+    */
+    getPipelineLeadPayload(pipelineId: number, statusId?: number): {
+        pipeline_id: number;
+        status_id: number;
+    };
+    /**
+    * @group Leads
+    * @see https://www.amocrm.ru/developers/content/crm_platform/leads-api#leads-add
+    */
+    addLead(leadData: any): Promise<any>;
+    /**
+    * @group Leads
+    */
     getLeadById(leadId: number, params: any): Promise<any>;
     /**
     * @group Leads

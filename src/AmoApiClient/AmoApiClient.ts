@@ -199,6 +199,36 @@ export class AmoApiClient {
   /**
   * @group Leads
   */
+  getBaseLeadPayload (name: string, price: number, createdBy?: number) {
+    return {
+      name,
+      created_by: createdBy ? createdBy : 0,
+      price,
+    };
+  }
+
+  /**
+  * @group Leads
+  */
+  getPipelineLeadPayload (pipelineId: number, statusId?: number) {    
+    return {
+      pipeline_id: pipelineId,
+      status_id: statusId ? statusId : 0,
+    };
+  }
+
+  /**
+  * @group Leads
+  * @see https://www.amocrm.ru/developers/content/crm_platform/leads-api#leads-add
+  */
+  async addLead(leadData: any) {
+    const url = `/api/v4/leads`;
+    return (await this.axios.post(url, [leadData])).data;
+  }
+
+  /**
+  * @group Leads
+  */
   async getLeadById(leadId: number, params: any) {
     if (!leadId) { throw new Error('no lead id'); }
     const paramWith = params?.contacts ? 'contacts' : null;
