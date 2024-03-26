@@ -62,6 +62,10 @@ export declare class AmoApiClient {
     /**
     * @group Leads
     */
+    addNoteToLead(leadId: number, note: Note): Promise<any>;
+    /**
+    * @group Leads
+    */
     getLeadById(leadId: number, params: any): Promise<any>;
     /**
     * @group Leads
@@ -99,6 +103,10 @@ export declare class AmoApiClient {
     * @group Contacts
     */
     getContacts(params: any): Promise<any>;
+    /**
+    * @group Contacts
+    */
+    addNoteToContact(contactId: number, note: Note): Promise<any>;
     /**
     * @group Contacts
     */

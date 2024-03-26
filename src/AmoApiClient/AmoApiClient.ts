@@ -227,6 +227,14 @@ export class AmoApiClient {
   }
 
   /**
+  * syntax sugar {@link addNote}
+  * @group Leads
+  */
+  async addNoteToLead (leadId: number, note: Note) {
+    return await this.addNote('leads', leadId, note);
+  }
+
+  /**
   * @group Leads
   */
   async getLeadById(leadId: number, params: any) {
@@ -315,6 +323,14 @@ export class AmoApiClient {
     }
     url = encodeURI(url);
     return (await this.axios.get(url)).data;
+  }
+
+  /**
+  * syntax sugar {@link addNote}
+  * @group Contacts
+  */
+  async addNoteToContact (contactId: number, note: Note) {
+    return await this.addNote('contacts', contactId, note);
   }
 
   /**
@@ -845,7 +861,7 @@ export class AmoApiClient {
   */
   async addTagForLeads (tag: AddTagParams) {
     return this.addTag('leads', [tag]);
-  }
+  }  
 
   /**
   * @group Tags

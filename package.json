@@ -2,18 +2,16 @@
   "name": "@mobilon-dev/amotop",
   "version": "0.1.38",
   "main": "dist/index",
-  "types": "types/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run code:build & npm run types:build & npm run docs:build",
+    "build": "npm run code:build & npm run docs:build",
     "code:build": "tsc",
-    "sample": "npm run build && node samples/index",
     "watch": "tsc --watch",
     "docs:build": "npx typedoc",
     "docs:view": "http-server ./docs/",
     "docs": "npm run docs:build && npm run docs:view",
-    "lint-fix": "npx eslint --fix ./src",
-    "types:build": "npx tsc src/*.ts --declaration --allowJs --emitDeclarationOnly --outDir types"
+    "lint-fix": "npx eslint --fix ./src"
   },
   "author": "",
   "license": "ISC",
