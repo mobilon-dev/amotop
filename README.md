@@ -8,6 +8,8 @@
 
 [Примеры](samples)
 
+[Видео: Знакомство с @mobilon-dev/amotop](https://www.youtube.com/watch?v=zRlO7e41bwg)
+
 ## Зачем?
 
 Простой клиент-обертка на API amoCRM, чтобы помочь коллеге быстро разобраться с концепцией amoCRM и начать приносить пользу.
