@@ -227,6 +227,31 @@ export class AmoApiClient {
   }
 
   /**
+  * syntax sugar {@link getLinksByEntityType}
+  * @group Leads
+  */
+  async getLeadLinks (leadId: number) {
+    if (!leadId) { throw new Error('no lead id'); }
+    return await this.getLinksByEntityType('leads', leadId);
+  }
+
+  /**
+  * syntax sugar {@link getNotesByEntityType}
+  * @group Leads
+  */
+  async getLeadsNotes (params: any) {
+    return this.getNotesByEntityType('leads', params);
+  }
+
+  /**
+  * syntax sugar {@link getTags}
+  * @group Contacts
+  */
+  async getLeadsTags (paramsIn: any) {
+    return this.getTags('leads', paramsIn);
+  }
+
+  /**
   * syntax sugar {@link addNote}
   * @group Leads
   */
@@ -241,14 +266,6 @@ export class AmoApiClient {
     if (!leadId) { throw new Error('no lead id'); }
     const paramWith = params?.contacts ? 'contacts' : null;
     const url = `/api/v4/leads/${leadId}?with=${paramWith}`;
-    return (await this.axios.get(url)).data;
-  }
-
-  /**
-  * @group Leads
-  */
-  async getLeadLinks (leadId: number) {
-    const url = `/api/v4/leads/${leadId}/links`;
     return (await this.axios.get(url)).data;
   }
 
@@ -345,24 +362,39 @@ export class AmoApiClient {
 
   /**
   * @group Contacts
-  * @see https://www.amocrm.ru/developers/content/crm_platform/entity-links-api#links-list
   */
   async getContactLinks (contactId: number) {
     if (!contactId) { throw new Error('no contact id'); }
-    const url = `/api/v4/contacts/${contactId}/links`;
+    return await this.getLinksByEntityType('contacts', contactId);
+  }
+
+  /**
+  * @group Entity
+  * @see https://www.amocrm.ru/developers/content/crm_platform/entity-links-api#links-list
+  */
+  async getLinksByEntityType (entityType: string, entityId: number) {
+    const url = `/api/v4/${entityType}/${entityId}/links`;
     return (await this.axios.get(url)).data;
   }
 
   /**
-  * @group Contacts
+  * @group Entity
   * @see https://www.amocrm.ru/developers/content/crm_platform/custom-fields#%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B9-%D1%81%D1%83%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8
+  */
+  async getCustomFieldsByEntityType (entityType: string, params: any) {
+    const url = `/api/v4/${entityType}/custom_fields`;
+    return (await this.axios.get(url, {params})).data;
+  }
+
+  /**
+  * syntax sugar {@link getCustomFieldsByEntityType}
+  * @group Contacts
   */
   async getContactsCustomFields (paramsIn: any) {
     const page = paramsIn?.page ? paramsIn?.page : 1;
     const limit = paramsIn?.limit ? paramsIn?.limit : 50;
     const params = {page, limit};
-    const url = `/api/v4/contacts/custom_fields`;
-    return (await this.axios.get(url, {params})).data;
+    return this.getCustomFieldsByEntityType('contacts', params);
   }
 
   /**
@@ -375,8 +407,8 @@ export class AmoApiClient {
   }
 
   /**
+  * syntax sugar {@link getTags}
   * @group Contacts
-  * @see https://www.amocrm.ru/developers/content/crm_platform/tags-api#%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D1%82%D0%B5%D0%B3%D0%BE%D0%B2-%D0%B4%D0%BB%D1%8F-%D1%81%D1%83%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8
   */
   async getContactsTags (paramsIn: any) {
     return this.getTags('contacts', paramsIn);
@@ -401,8 +433,8 @@ export class AmoApiClient {
   }
 
   /**
+  * syntax sugar {@link addCustomFields}
   * @group Contacts
-  * {@link addCustomFields}
   */
   async addContactsCustomFields (fields: any[]) {
     return this.addCustomFields('contacts', fields);
@@ -481,8 +513,6 @@ export class AmoApiClient {
     const response = await this.axios.put(url, [{file_uuid: fileUUID}]);
     return  response.data;
   }
-
-  
 
   /**
   * @group Leads
@@ -666,8 +696,8 @@ export class AmoApiClient {
   }
 
   /**
+  * syntax sugar {@link getNotesByEntityType}
   * @group Contacts
-  * @see https://www.amocrm.ru/developers/content/crm_platform/events-and-notes#notes-list
   */
   async getContactsNotes (params: any) {
     return this.getNotesByEntityType('contacts', params);
@@ -723,6 +753,7 @@ export class AmoApiClient {
   // sources
   /**
   * @group Sources
+  * @see https://www.amocrm.ru/developers/content/crm_platform/sources-api
   */
   async getSources () {
     return (await this.axios.get(`/api/v4/sources`)).data;
@@ -832,6 +863,7 @@ export class AmoApiClient {
   //api/v4/{entity_type:leads|contacts|companies|customers}/tags
   /**
   * @group Tags
+  * @see https://www.amocrm.ru/developers/content/crm_platform/tags-api#%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D1%82%D0%B5%D0%B3%D0%BE%D0%B2-%D0%B4%D0%BB%D1%8F-%D1%81%D1%83%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8
   */
   private async getTags (entityType: string, paramsIn: any) {
     const page = paramsIn?.page ? paramsIn?.page : 1;

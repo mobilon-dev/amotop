@@ -5,7 +5,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run code:build & npm run docs:build",
+    "build": "npm run code:build && npm run docs:build",
     "code:build": "tsc",
     "watch": "tsc --watch",
     "docs:build": "npx typedoc",
