@@ -523,6 +523,8 @@ export class AmoApiClient {
     return  response.data;
   }
 
+
+  //companies
   /**
   * @group Companies
   */
@@ -550,13 +552,36 @@ export class AmoApiClient {
   }
 
   /**
+  * syntax sugar {@link getLinksByEntityType}
   * @group Companies
-  * @see https://www.amocrm.ru/developers/content/crm_platform/entity-links-api#links-list
   */
   async getCompanyLinks (companyId: number) {
     if (!companyId) { throw new Error('no company id'); }
-    const url = `/api/v4/companies/${companyId}/links`;
-    return (await this.axios.get(url)).data;
+    return await this.getLinksByEntityType('contacts', companyId);
+  }
+
+  /**
+  * syntax sugar {@link getNotesByEntityId}
+  * @group Companies
+  */
+  async getCompanyNotes (companyId: number) {
+    return this.getNotesByEntityId('companies', companyId);
+  }
+
+  /**
+  * syntax sugar {@link getNoteById}
+  * @group Companies
+  */
+  async getCompanyNoteById (companyId: number, noteId: number) {
+    return this.getNoteById('companies', companyId, noteId);
+  }
+
+  /**
+  * syntax sugar {@link getNotesByEntityType}
+  * @group Companies
+  */
+  async getCompaniesNotes (params: any) {
+    return this.getNotesByEntityType('companies', params);
   }
 
   // events
