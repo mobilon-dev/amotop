@@ -245,7 +245,7 @@ export class AmoApiClient {
 
   /**
   * syntax sugar {@link getTags}
-  * @group Contacts
+  * @group Leads
   */
   async getLeadsTags (paramsIn: any) {
     return this.getTags('leads', paramsIn);
