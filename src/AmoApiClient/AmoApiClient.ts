@@ -488,13 +488,22 @@ export class AmoApiClient {
   }
 
   /**
-  * @group Contacts
+  * @group Entities
+  * @see https://www.amocrm.ru/developers/content/files/files-api#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D1%84%D0%B0%D0%B9%D0%BB%D0%BE%D0%B2-%D1%81%D0%B2%D1%8F%D0%B7%D0%B0%D0%BD%D0%BD%D1%8B%D1%85-%D1%81-%D1%81%D1%83%D1%89%D0%BD%D0%BE%D1%81%D1%82%D1%8C%D1%8E
   */
-  async getContactFiles(contactId: number) {
-    const url = `/api/v4/contacts/${contactId}/files`;
+  async getEntityFiles(entityType: string, contactId: number) {
+    const url = `/api/v4/${entityType}/${contactId}/files`;
     const response = await this.axios.get(url);
     return  response.data;
   }
+
+  /**
+  * syntax sugar {@link getEntityFiles}
+  * @group Contacts
+  */
+  async getContactFiles(contactId: number) {
+    return await this.getEntityFiles('contacts', contactId);
+  }  
 
   /**
   * @group Leads
@@ -582,6 +591,14 @@ export class AmoApiClient {
   */
   async getCompaniesNotes (params: any) {
     return this.getNotesByEntityType('companies', params);
+  }
+
+  /**
+  * syntax sugar {@link getEntityFiles}
+  * @group Companies
+  */
+  async getCompanyFiles(companyId: number) {
+    return await this.getEntityFiles('companies', companyId);
   }
 
   // events

@@ -2,7 +2,7 @@ import {createHmac} from 'crypto';
 import axios, { AxiosInstance } from 'axios';
 import {requestLogger,responseLogger} from 'axios-logger';
 
-import {AmoJoChannelClientOptions} from './interfaces';
+import {AmoJoChannelClientOptions, SendRequestOptions} from './interfaces';
 
 export class AmoJoChannelClient {
   instance: AxiosInstance;
@@ -44,7 +44,7 @@ export class AmoJoChannelClient {
     }
   }
 
-  async sendRequest(method: string, url: string, options: any | null) {
+  async sendRequest(method: string, url: string, options: SendRequestOptions) {
     const content = options && options.data ? options.data : '';
     const bodyContent = (content === '') ? '' : JSON.stringify(content);
 
@@ -73,8 +73,12 @@ export class AmoJoChannelClient {
     });
   }
   
-  async disconnectChannel(account_id: string) {
-    return await this.sendRequest('DELETE', `${this.channelId}/disconnect`, { data: {account_id} });
+  async disconnectChannel(amojo_account_id: string) {
+    return await this.sendRequest('DELETE', `${this.channelId}/disconnect`, { 
+      data: {
+        account_id: amojo_account_id,
+      },
+    });
   }
 }
 
