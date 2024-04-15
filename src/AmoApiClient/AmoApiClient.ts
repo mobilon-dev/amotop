@@ -398,11 +398,35 @@ export class AmoApiClient {
   }
 
   /**
+  * syntax sugar {@link getCustomFieldById}
+  * @group Leads
+  */
+  async getLeadsCustomFieldById (customFieldId: string) {
+    return await this.getCustomFieldById('leads', customFieldId);
+  }
+
+  /**
+  * syntax sugar {@link getCustomFieldById}
+  * @group Companies
+  */
+  async getCompaniesCustomFieldById (customFieldId: string) {
+    return await this.getCustomFieldById('companies', customFieldId);
+  }
+
+  /**
+  * syntax sugar {@link getCustomFieldById}
   * @group Contacts
-  * @see https://www.amocrm.ru/developers/content/crm_platform/custom-fields#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE%D0%BB%D1%8F-%D1%81%D1%83%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%BF%D0%BE-%D0%B5%D0%B3%D0%BE-ID
   */
   async getContactsCustomFieldById (customFieldId: string) {
-    const url = `/api/v4/contacts/custom_fields/${customFieldId}`;
+    return await this.getCustomFieldById('contacts', customFieldId);
+  }
+
+  /**
+  * @group Entity
+  * @see https://www.amocrm.ru/developers/content/crm_platform/custom-fields#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BF%D0%BE%D0%BB%D1%8F-%D1%81%D1%83%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%BF%D0%BE-%D0%B5%D0%B3%D0%BE-ID
+  */
+  async getCustomFieldById (entityType: string, customFieldId: string) {
+    const url = `/api/v4/${entityType}/custom_fields/${customFieldId}`;
     return (await this.axios.get(url)).data;
   }
 
@@ -553,10 +577,10 @@ export class AmoApiClient {
   /**
   * @group Companies
   */
-  async getCompany (id: number, params: any) {
-    if (!id) { throw new Error('no company id'); }
+  async getCompany (companyId: number, params: any) {
+    if (!companyId) { throw new Error('no company id'); }
     const paramWith = params?.leads ? 'leads' : null;
-    const url = `/api/v4/companies/${id}?with=${paramWith}`;
+    const url = `/api/v4/companies/${companyId}?with=${paramWith}`;
     return (await this.axios.get(url)).data;
   }
 
@@ -916,7 +940,7 @@ export class AmoApiClient {
   }
 
   /**
-  * @group Tags for leads
+  * @group Leads
   */
   async getTagsForLeads (paramsIn: any) {
     return this.getTags('leads', paramsIn);
@@ -931,7 +955,7 @@ export class AmoApiClient {
   }
 
   /**
-  * @group Tags for leads
+  * @group Leads
   */
   async addTagForLeads (tag: AddTagParams) {
     return this.addTag('leads', [tag]);
@@ -950,7 +974,7 @@ export class AmoApiClient {
   }
 
   /**
-  * @group Tags for leads
+  * @group Leads
   */
   async appendTagsToLead (entityId: number, tags: Tag[]) {
     return this.appendTags('leads', entityId, tags);
