@@ -1,6 +1,6 @@
 {
   "name": "@mobilon-dev/amotop",
-  "version": "0.1.38",
+  "version": "0.1.39",
   "main": "dist/index",
   "types": "dist/index.d.ts",
   "scripts": {
