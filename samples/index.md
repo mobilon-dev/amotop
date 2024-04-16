@@ -11,3 +11,5 @@
 
 [Как загрузить файл в сделку amoCRM?](uploadFileToLead.js)
 
+[Как получить все контакты из amoCRM?](getAllContacts.js)
+
