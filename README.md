@@ -6,7 +6,7 @@
 
 [Документация](https://mobilon-dev.github.io/amotop/)
 
-[Примеры](samples)
+[Примеры](samples/index.md)
 
 [Видео: Знакомство с @mobilon-dev/amotop](https://www.youtube.com/watch?v=zRlO7e41bwg)
 
