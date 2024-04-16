@@ -13,3 +13,4 @@
 
 [Как получить все контакты из amoCRM?](getAllContacts.js)
 
+[Как получить все сделки из amoCRM?](getAllLeads.js)
