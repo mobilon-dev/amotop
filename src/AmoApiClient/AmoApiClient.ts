@@ -974,6 +974,7 @@ export class AmoApiClient {
   }
 
   /**
+  * syntax sugar {@link appendTags}
   * @group Leads
   */
   async appendTagsToLead (entityId: number, tags: Tag[]) {
