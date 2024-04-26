@@ -5,4 +5,6 @@ export interface GetAccountParams {
   version?: boolean;
   driveUrl?: boolean;
   isApiFilterEnabled?: boolean;
+  usersGroups?: boolean;
+  taskTypes?: boolean;
 }

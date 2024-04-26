@@ -140,6 +140,9 @@ export class AmoApiClient {
     if (paramIn?.amojoRights) { withArray.push('amojo_rights') }
     if (paramIn?.driveUrl) { withArray.push('drive_url') }
     if (paramIn?.isApiFilterEnabled) { withArray.push('is_api_filter_enabled') }
+    if (paramIn?.usersGroups) { withArray.push('users_groups') }
+    if (paramIn?.taskTypes) { withArray.push('task_types') }
+    
 
     const url = '/api/v4/account';
 
