@@ -272,6 +272,51 @@ export class AmoApiClient {
     return (await this.axios.get(url)).data;
   }
 
+  /**
+  * syntax sugar {@link getNotesByEntityType}
+  * @group Leads
+  */
+  async getLeadNoteById (leadId: number, noteId: number) {
+    return this.getNoteById('leads', leadId, noteId);
+  }
+
+  /**
+  * syntax sugar {@link getCustomFieldsByEntityType}
+  * @group Companies
+  */
+  async getLeadsCustomFields (paramsIn: any) {
+    const page = paramsIn?.page ? paramsIn?.page : 1;
+    const limit = paramsIn?.limit ? paramsIn?.limit : 50;
+    const params = {page, limit};
+    return this.getCustomFieldsByEntityType('leads', params);
+  }
+
+  /**
+  * @group Leads
+  * @see https://www.amocrm.ru/developers/content/crm_platform/custom-fields#%D0%A1%D0%BF%D0%B8%D1%81%D0%BE%D0%BA-%D0%B3%D1%80%D1%83%D0%BF%D0%BF-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B9-%D1%81%D1%83%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8
+  */
+  async getLeadsCustomFieldGroups () {
+    const url = `/api/v4/leads/custom_fields/groups`;
+    return (await this.axios.get(url)).data;
+  }
+
+  /**
+  * @group Leads
+  * @see https://www.amocrm.ru/developers/content/crm_platform/custom-fields#%D0%9F%D0%BE%D0%BB%D1%83%D1%87%D0%B5%D0%BD%D0%B8%D0%B5-%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B9-%D1%81%D1%83%D1%89%D0%BD%D0%BE%D1%81%D1%82%D0%B8-%D0%BF%D0%BE-ID-%D0%B3%D1%80%D1%83%D0%BF%D0%BF%D1%8B
+  */
+  async getLeadsCustomFieldGroupById (groupId: string) {
+    const url = `/api/v4/leads/custom_fields/groups/${groupId}`;
+    return (await this.axios.get(url)).data;
+  }
+
+  /**
+  * syntax sugar {@link addCustomFields}
+  * @group Leads
+  */
+  async addLeadsCustomFields (fields: any[]) {
+    return this.addCustomFields('leads', fields);
+  }
+
   // pipelines
   /**
   * @group Pipelines
