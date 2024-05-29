@@ -10,3 +10,4 @@ export * from './GetAccountParams';
 export * from './GetTalkParams';
 export * from './AddTagParams';
 export * from './Tag';
+export * from './Contact';

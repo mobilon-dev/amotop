@@ -15,6 +15,7 @@ import {
   GetAccountParams,
   GetTalkParams,
   AddTagParams,
+  Contact,
 } from './interfaces';
 
 export class AmoApiClient {
@@ -404,6 +405,29 @@ export class AmoApiClient {
   */
   async addNoteToContact (contactId: number, note: Note) {
     return await this.addNote('contacts', contactId, note);
+  }
+
+  getContactPayload(name: string, phone: string): Contact {
+    return {
+      name,
+      custom_fields_values: [{
+        field_name: 'Телефон',
+        field_code: 'PHONE',
+        field_type: 'multitext',
+        values: [{
+          value: phone,
+        }],
+      }],
+      created_at: Date.now(),
+    };
+  }
+
+  /**
+  * @group Contacts
+  */
+  async addContact (contact: Contact) {
+    const url = `/api/v4/contacts`;
+    return (await this.axios.post(url, [contact])).data;
   }
 
   /**
