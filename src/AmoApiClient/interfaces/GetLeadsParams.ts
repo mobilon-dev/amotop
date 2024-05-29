@@ -1,4 +1,5 @@
 export interface GetLeadsParams {
+  with?: string,
   page?: number,
   limit?: number,
   query?: string,

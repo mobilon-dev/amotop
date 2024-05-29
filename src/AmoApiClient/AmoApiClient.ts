@@ -186,7 +186,8 @@ export class AmoApiClient {
     const limit = params?.limit ? params?.limit : 50;
     const query = params?.query ? params?.query : null;
     const filter = params?.filter ? params?.filter : null;
-    // console.log('filter', filter);
+    const withP = params?.with ? params?.with : null;
+
     let url = `/api/v4/leads`;
     url += `?page=${page}&limit=${limit}`;
     if (query) {
@@ -197,6 +198,9 @@ export class AmoApiClient {
       if (filter.createdAtFrom) { filterArr.push(`filter[created_at][from]=${filter.createdAtFrom}`); }
       if (filter.createdAtTo) { filterArr.push(`filter[created_at][to]=${filter.createdAtTo}`); }
       url += `&` + filterArr.join('&');
+    }
+    if (withP){
+      url += `&with=${withP}`;
     }
     url = encodeURI(url);
     //console.log('url', url);
