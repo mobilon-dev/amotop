@@ -157,9 +157,13 @@ export class AmoApiClient {
 
   /**
   * @group Users
+  * @see https://www.amocrm.ru/developers/content/crm_platform/users-api#users-list
   */
   async getUsers() {
-    return (await this.axios.get('/api/v4/users')).data;
+    const params = {
+      with: 'amojo_id',
+    };
+    return (await this.axios.get('/api/v4/users', {params})).data;
   }
 
   /**
