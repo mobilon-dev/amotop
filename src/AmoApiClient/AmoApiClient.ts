@@ -390,10 +390,14 @@ export class AmoApiClient {
     const page = params?.page ? params?.page : 1;
     const limit = params?.limit ? params?.limit : 50;
     const query = params?.query ? params?.query : null;
+    const withP = params?.with ? params?.with : null;
     let url = `/api/v4/contacts`;
     url += `?page=${page}&limit=${limit}`;
     if (query) {
       url += `&query=${query}`;
+    }
+    if(withP) {
+      url += `&with=${withP}`;
     }
     url = encodeURI(url);
     return (await this.axios.get(url)).data;
