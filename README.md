@@ -2,17 +2,26 @@
 
 @mobilon-dev/amotop - еще один amoCRM API клиент для node.js
 
-[Репозиторий](https://github.com/mobilon-dev/amotop)
+- [Репозиторий](https://github.com/mobilon-dev/amotop)
 
-[Документация](https://mobilon-dev.github.io/amotop/)
+- [Документация](https://mobilon-dev.github.io/amotop/)
 
-[Примеры](samples/index.md)
+- [Примеры](samples/index.md)
 
-[Видео: Знакомство с @mobilon-dev/amotop](https://www.youtube.com/watch?v=zRlO7e41bwg)
+
+## Видео
+
+- [Видео: Знакомство с @mobilon-dev/amotop](https://youtu.be/zRlO7e41bwg)
+
+- [Видео: amoCRM oAuth 2.0](https://youtu.be/CxQcB5AsyHI)
+
+- [Видео: amoCRM chat API](https://youtu.be/f31UVtn7EJI)
+
 
 ## Зачем?
 
 Простой клиент-обертка на API amoCRM, чтобы помочь коллеге быстро разобраться с концепцией amoCRM и начать приносить пользу.
+
 
 ## Преимущества
 
