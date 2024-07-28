@@ -1,5 +1,5 @@
 const fs = require('fs');
-const {AmoApiClient, AmoFileClient} = require('../dist');
+const {AmoApiClient, AmoFileClient} = require('../../dist');
 const axios = require('axios');
 
 const {domain, accessToken, debug} = require('./_config');
@@ -12,7 +12,6 @@ const contactId = 93579227;
 const leadId = 28283519;
 
 
-
 const start = async () => {
   try {
     // загружаем файл по ссылке
@@ -20,7 +19,7 @@ const start = async () => {
     console.log('download success', file.headers);
 
     // сохраняем содержимое файла на диск
-    const fileName = 'sample.jpg';
+    const fileName = 'sample2.jpg';
     const filePath = __dirname + '/' + fileName;
     const contentType = file.headers['content-type'];
     fs.writeFileSync(filePath, file.data);
@@ -43,6 +42,4 @@ const start = async () => {
 }   
 
 (start)();
-
-
 
