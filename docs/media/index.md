@@ -18,3 +18,5 @@
 [Как получить воронки и этапы воронок из amoCRM?](getPipelines.js)
 
 [Как получить все типы задач в amoCRM?](getAccountTaskTypes.js)
+
+[Как добавить задачу в amoCRM?](getTasks.js)

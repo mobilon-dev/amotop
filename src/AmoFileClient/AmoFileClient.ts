@@ -1,6 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import {requestLogger,responseLogger} from 'axios-logger';
 import {jwtDecode} from 'jwt-decode'
+import * as fsPromises from 'fs/promises';
+import * as fs from 'fs';
 
 export class AmoFileClient {
   driveUrl: string;
@@ -80,6 +82,68 @@ export class AmoFileClient {
   async uploadFilePart(uploadUrl: string, data: any) {
     const response = await this.instance.post(uploadUrl, data);
     return response.data;
+  }
+
+  private async getPartsMap (fileName: string, splitSize: number) {
+    const totalFileSize = await this.getTotalFileSize(fileName);
+    const partsCount = Math.ceil(totalFileSize / splitSize);
+  
+    console.log({totalFileSize, partsCount});
+    let parts = [];
+    for (let i = 0; i < partsCount; i++) {
+      const isLast = i + 1 === partsCount;
+      parts.push({
+        index: i, 
+        start: i * splitSize, 
+        end: isLast ? totalFileSize - 1 : (i+1) * splitSize - 1,
+        isLast
+      })
+    }
+  
+    console.table(parts);
+    return parts;
+  }
+  
+  private async getTotalFileSize (fileName: string) {
+    const stat = await fsPromises.stat(fileName);
+    const totalFileSize = stat.size;
+    return totalFileSize;
+  }
+  
+  async uploadFile (fileName: string, filePath: string, contentType: string) {
+    console.log({fileName, filePath, contentType});
+    const splitSize = 32 * 1024;   // max 128 kb
+    const partsMap = await this.getPartsMap(filePath, splitSize);
+    
+    // создаем сессию
+    const data = {
+      fileSize: await this.getTotalFileSize(filePath),
+      fileName,
+      contentType,
+    };
+    // console.log('data', data);
+    const session = await this.createSession(data);
+    console.log('session', JSON.stringify(session, null, 2));
+
+    let uploadUrl = session.upload_url;
+    // загружаем файл
+    let fileUUID;
+
+    for (const part of partsMap) {
+      const data = fs.createReadStream(filePath, {
+        encoding: null,
+        start: part.start,
+        end: part.end,
+      });
+      const result = await this.uploadFilePart(uploadUrl, data);
+      // console.log('result', result);
+      uploadUrl = result.next_url;
+      if (part.isLast) {
+        fileUUID = result.uuid;
+      }
+    }
+
+    return fileUUID;
   }
 }
 

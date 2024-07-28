@@ -19,7 +19,9 @@
     "axios": "^1.7.2",
     "axios-logger": "^2.8.1",
     "form-urlencoded": "^6.1.5",
-    "jwt-decode": "^4.0.0"
+    "jwt-decode": "^4.0.0",
+    "moment": "^2.30.1",
+    "split-file": "^2.3.0"
   },
   "devDependencies": {
     "@types/node": "^20.14.10",
