@@ -8,6 +8,7 @@ export class AmoFileClient {
   driveUrl: string;
   instance: AxiosInstance;
   accessToken: string;
+  debug: boolean = false;
 
   constructor(accessToken: string, options: any) {
     this.driveUrl = options.driveUrl ? options.driveUrl : 'https://drive-b.amocrm.ru';
@@ -26,6 +27,7 @@ export class AmoFileClient {
     });
     
     if (options?.debug) {
+      this.debug = true;
       const config = {
         prefixText: 'AmoFileClient',
         headers: false,
@@ -66,7 +68,13 @@ export class AmoFileClient {
     return response.data;
   }
 
-  async createSession(params: any) {
+  async restoreFileByUUID (uuid: string) {
+    const url = `/v1.0/files/restore`;
+    const response = await this.instance.post(url, [{uuid}]);
+    return response.data;
+  }
+
+  private async createSession(params: any) {
     const url = '/v1.0/sessions';
 
     const data = {
@@ -79,7 +87,7 @@ export class AmoFileClient {
     return response.data;
   }
 
-  async uploadFilePart(uploadUrl: string, data: any) {
+  private async uploadFilePart(uploadUrl: string, data: any) {
     const response = await this.instance.post(uploadUrl, data);
     return response.data;
   }
@@ -88,19 +96,19 @@ export class AmoFileClient {
     const totalFileSize = await this.getTotalFileSize(fileName);
     const partsCount = Math.ceil(totalFileSize / splitSize);
   
-    console.log({totalFileSize, partsCount});
+    if (this.debug) console.log({totalFileSize, partsCount});
     let parts = [];
     for (let i = 0; i < partsCount; i++) {
       const isLast = i + 1 === partsCount;
       parts.push({
         index: i, 
         start: i * splitSize, 
-        end: isLast ? totalFileSize - 1 : (i+1) * splitSize - 1,
+        end: isLast ? totalFileSize - 1 : (i + 1) * splitSize - 1,
         isLast
       })
     }
   
-    console.table(parts);
+    if (this.debug) console.table(parts);
     return parts;
   }
   
@@ -111,7 +119,7 @@ export class AmoFileClient {
   }
   
   async uploadFile (fileName: string, filePath: string, contentType: string) {
-    console.log({fileName, filePath, contentType});
+    if (this.debug) console.log('uploadFile', {fileName, filePath, contentType});
     const splitSize = 32 * 1024;   // max 128 kb
     const partsMap = await this.getPartsMap(filePath, splitSize);
     
@@ -123,11 +131,11 @@ export class AmoFileClient {
     };
     // console.log('data', data);
     const session = await this.createSession(data);
-    console.log('session', JSON.stringify(session, null, 2));
+    if (this.debug) console.log('session', JSON.stringify(session, null, 2));
 
     let uploadUrl = session.upload_url;
     // загружаем файл
-    let fileUUID;
+    let lastResult;
 
     for (const part of partsMap) {
       const data = fs.createReadStream(filePath, {
@@ -139,11 +147,11 @@ export class AmoFileClient {
       // console.log('result', result);
       uploadUrl = result.next_url;
       if (part.isLast) {
-        fileUUID = result.uuid;
+        lastResult = result;
       }
     }
 
-    return fileUUID;
+    return lastResult;
   }
 }
 
