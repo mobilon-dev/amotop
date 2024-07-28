@@ -9,4 +9,4 @@ export interface Contact {
     }],
   }],
   created_at: number;
-};
+}

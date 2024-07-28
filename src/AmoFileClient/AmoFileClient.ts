@@ -8,7 +8,7 @@ export class AmoFileClient {
   driveUrl: string;
   instance: AxiosInstance;
   accessToken: string;
-  debug: boolean = false;
+  debug = false;
 
   constructor(accessToken: string, options: any) {
     this.driveUrl = options.driveUrl ? options.driveUrl : 'https://drive-b.amocrm.ru';
@@ -97,7 +97,7 @@ export class AmoFileClient {
     const partsCount = Math.ceil(totalFileSize / splitSize);
   
     if (this.debug) console.log({totalFileSize, partsCount});
-    let parts = [];
+    const parts = [];
     for (let i = 0; i < partsCount; i++) {
       const isLast = i + 1 === partsCount;
       parts.push({

@@ -1,4 +1,4 @@
-// const {AmoApiClient} = require('@mobilon/amotop');
+const fs = require('fs');
 const {AmoApiClient, AmoFileClient} = require('../dist');
 const axios = require('axios');
 
@@ -8,8 +8,10 @@ const amoApiClient = new AmoApiClient(domain, accessToken, {debug});
 const amoFileClient = new AmoFileClient(accessToken, {debug});
 
 const imgUrl = 'https://upload.wikimedia.org/wikipedia/commons/a/a8/IFL_Small.jpg';
-const contactId = 12366879;
-const leadId = 7260399;
+const contactId = 93579227;
+const leadId = 28283519;
+
+
 
 const start = async () => {
   try {
@@ -17,20 +19,15 @@ const start = async () => {
     const file = await axios.get(imgUrl, {responseType: 'arraybuffer'});
     console.log('download success', file.headers);
 
-    // создаем сессию
-    const data = {
-      fileSize: Number(file.headers['content-length']),
-      fileName: '1.jpg',
-      contentType: file.headers['content-type'],
-    };
-    console.log('data', data);
-    const session = await amoFileClient.createSession(data);
-    console.log('session', JSON.stringify(session, null, 2));
+    // сохраняем содержимое файла на диск
+    const fileName = 'sample.jpg';
+    const filePath = __dirname + '/' + fileName;
+    const contentType = file.headers['content-type'];
+    fs.writeFileSync(filePath, file.data);
 
-    const uploadUrl = session.upload_url;
-    // загружаем файл
-    const session2 = await amoFileClient.uploadFilePart(uploadUrl, file.data);
-    const fileUUID = session2.uuid;
+    // загружаем файл на драйв амо
+    const result = await amoFileClient.uploadFile(fileName, filePath, contentType);
+    const fileUUID = result.uuid;
     console.log('file uuid', fileUUID);
 
     // связка с контактом
