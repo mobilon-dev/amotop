@@ -74,6 +74,15 @@ export class AmoFileClient {
     return response.data;
   }
 
+  /*
+  async deleteFileByUUID (uuid: string) {
+    const url = `/v1.0/files`;
+    // http spec: delete method have not payload
+    const response = await this.instance.delete(url, {data: [{uuid}]});
+    return response.data;
+  }
+  */
+
   private async createSession(params: any) {
     const url = '/v1.0/sessions';
 
