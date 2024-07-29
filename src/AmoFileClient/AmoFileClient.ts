@@ -129,7 +129,7 @@ export class AmoFileClient {
   
   async uploadFile (fileName: string, filePath: string, contentType: string) {
     if (this.debug) console.log('uploadFile', {fileName, filePath, contentType});
-    const splitSize = 32 * 1024;   // max 128 kb
+    const splitSize = 128 * 1024;   // max 128 kb
     const partsMap = await this.getPartsMap(filePath, splitSize);
     
     // создаем сессию
