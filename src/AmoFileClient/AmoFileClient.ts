@@ -123,8 +123,7 @@ export class AmoFileClient {
   
   private async getTotalFileSize (fileName: string) {
     const stat = await fsPromises.stat(fileName);
-    const totalFileSize = stat.size;
-    return totalFileSize;
+    return stat.size;
   }
   
   async uploadFile (fileName: string, filePath: string, contentType: string) {

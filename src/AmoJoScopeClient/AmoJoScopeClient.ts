@@ -89,12 +89,11 @@ export class AmoJoScopeClient {
 
   private createCheckSum(method: string, bodyContent: string) {
     const body = (method.toLowerCase() === 'get') ? '' : bodyContent;
-    const checkSum = createHash('md5').update(body).digest('hex');
-    return checkSum;
+    return createHash('md5').update(body).digest('hex');
   }
 
   getChatDto (amojoUserId: string) {
-    const chatDto = {
+    return {
       conversation_id: randomUUID(),
       user: {
         // id: randomUUID(),
@@ -102,8 +101,6 @@ export class AmoJoScopeClient {
         // name: 'Unknown',
       },
     };
-
-    return chatDto;
   }
 
   async createChat(chatDto: any) {
@@ -115,13 +112,11 @@ export class AmoJoScopeClient {
       event_type: 'new_message',
       payload,
     };
-    const response = await this.sendRequest('POST', `/${this.scopeId}`, {data});
-    return response;
+    return await this.sendRequest('POST', `/${this.scopeId}`, {data});
   }
 
   async getChatHistory(conversationId: string) {
-    const response = await this.sendRequest('GET', `/${this.scopeId}/chats/${conversationId}/history`);
-    return response;
+    return await this.sendRequest('GET', `/${this.scopeId}/chats/${conversationId}/history`);
   }
 
   async updateMessageStatus(msgid: string, deliveryStatus: DeliveryStatusEnum, errorCode?: number, error?: string) {
@@ -132,9 +127,8 @@ export class AmoJoScopeClient {
       error: error ? error: null,
     };
 
-    const response = await this.sendRequest('POST', `/${this.scopeId}/${msgid}/delivery_status`, {data});
     // вернет пустой контент
-    return response;
+    return await this.sendRequest('POST', `/${this.scopeId}/${msgid}/delivery_status`, {data});
   }
 
 
@@ -261,7 +255,7 @@ export class AmoJoScopeClient {
   * @group Payloads Text
   */
   getTextPayloadFromBot (params: TextPayloadFromBotParams) {    
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -269,7 +263,6 @@ export class AmoJoScopeClient {
       ...this.getSenderReceiverFromBot({channelBotId: params.channelBotId}),
       ...this.getTextMessage({message: params.message}),
     };
-    return payload;
   }
 
 
@@ -277,7 +270,7 @@ export class AmoJoScopeClient {
   * @group Payloads Text
   */
   getTextPayloadFromUser (params: TextPayloadFromUserParams): any {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -285,14 +278,13 @@ export class AmoJoScopeClient {
       ...this.getSenderRecieverFromUser({amojoUserId: params.amojoUserId}),
       ...this.getTextMessage({message: params.message}),
     };
-    return payload;
   }
 
   /**
   * @group Payloads Text
   */
   getTextPayloadFromContact (params: TextPayloadFromContactParams) {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -300,7 +292,6 @@ export class AmoJoScopeClient {
       ...this.getSenderReceiverFromContact({senderName: params.senderName}),
       ...this.getTextMessage({message: params.message}),
     };
-    return payload;
   }
 
   getQuoteTextMessage (params: any) {
@@ -349,7 +340,7 @@ export class AmoJoScopeClient {
   * @group Payloads Image
   */
   getImagePayloadFromBot (params: ImagePayloadFromBotParams) {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -357,14 +348,13 @@ export class AmoJoScopeClient {
       ...this.getSenderReceiverFromBot({channelBotId: params.channelBotId}),
       ...this.getImageMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-    return payload;
   }
 
   /**
   * @group Payloads Image
   */
   getImagePayloadFromUser (params: ImagePayloadFromUserParams): any {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -372,7 +362,6 @@ export class AmoJoScopeClient {
       ...this.getSenderRecieverFromUser({amojoUserId: params.amojoUserId}),
       ...this.getImageMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-    return payload;
   }
 
 
@@ -380,7 +369,7 @@ export class AmoJoScopeClient {
   * @group Payloads Image
   */
   getImagePayloadFromContact (params: ImagePayloadFromContactParams) {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -388,14 +377,13 @@ export class AmoJoScopeClient {
       ...this.getSenderReceiverFromContact({senderName: params.senderName}),      
       ...this.getImageMessage({message: params.message, mediaUrl: params.mediaUrl}),      
     };
-    return payload;
   }
 
   /**
   * @group Payloads Video
   */
   getVideoPayloadFromBot (params: ImagePayloadFromBotParams) {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -403,14 +391,13 @@ export class AmoJoScopeClient {
       ...this.getSenderReceiverFromBot({channelBotId: params.channelBotId}),
       ...this.getVideoMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-    return payload;
   }
 
   /**
   * @group Payloads Video
   */
   getVideoPayloadFromUser (params: ImagePayloadFromUserParams): any {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -418,7 +405,6 @@ export class AmoJoScopeClient {
       ...this.getSenderRecieverFromUser({amojoUserId: params.amojoUserId}),
       ...this.getVideoMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-    return payload;
   }
 
 
@@ -426,7 +412,7 @@ export class AmoJoScopeClient {
   * @group Payloads Video
   */
   getVideoPayloadFromContact (params: ImagePayloadFromContactParams) {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -434,14 +420,13 @@ export class AmoJoScopeClient {
       ...this.getSenderReceiverFromContact({senderName: params.senderName}),      
       ...this.getVideoMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-    return payload;
   }
 
   /**
   * @group Payloads Audio
   */
   getAudioPayloadFromBot (params: ImagePayloadFromBotParams) {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -449,14 +434,13 @@ export class AmoJoScopeClient {
       ...this.getSenderReceiverFromBot({channelBotId: params.channelBotId}),
       ...this.getAudioMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-    return payload;
   }
 
   /**
   * @group Payloads Audio
   */
   getAudioPayloadFromUser (params: ImagePayloadFromUserParams): any {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -464,7 +448,6 @@ export class AmoJoScopeClient {
       ...this.getSenderRecieverFromUser({amojoUserId: params.amojoUserId}),
       ...this.getAudioMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-    return payload;
   }
 
 
@@ -472,7 +455,7 @@ export class AmoJoScopeClient {
   * @group Payloads Audio
   */
   getAudioPayloadFromContact (params: ImagePayloadFromContactParams) {
-    const payload = {
+    return {
       ...this.getMessageIdAndDate(),
       ...this.getSilent(params.silent),
       ...this.getSource(params.sourceExternalId),
@@ -480,7 +463,6 @@ export class AmoJoScopeClient {
       ...this.getSenderReceiverFromContact({senderName: params.senderName}),
       ...this.getAudioMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-    return payload;
   }
 
 }

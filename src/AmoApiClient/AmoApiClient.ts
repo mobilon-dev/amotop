@@ -61,14 +61,17 @@ export class AmoApiClient {
   * @group Webhooks
   */
   async getWebhooks() {
-    return (await this.axios.get('/api/v4/webhooks')).data;
+    const url = '/api/v4/webhooks';
+    const response = await this.axios.get(url)
+    return response.data;
   }
 
   /**
   * @group Webhooks
   */
   async setWebhook(params: WebhookParams) {
-    return (await this.axios.post('/api/v4/webhooks', {
+    const url = '/api/v4/webhooks';
+    return (await this.axios.post(url, {
       destination: params.destination,
       settings: params.settings,
     })).data;
@@ -121,7 +124,8 @@ export class AmoApiClient {
   * @group Webhooks
   */
   async deleteWebhook({destination}: any) {
-    return (await this.axios.delete('/api/v4/webhooks', {
+    const url = '/api/v4/webhooks';
+    return (await this.axios.delete(url, {
       data: {
         destination,
       },

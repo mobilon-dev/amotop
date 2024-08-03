@@ -26,6 +26,7 @@
   "devDependencies": {
     "@types/node": "^20.14.10",
     "eslint": "^8.57.0",
+    "eslint-plugin-sonarjs": "^1.0.4",
     "http-server": "^14.1.1",
     "typedoc": "^0.26.3",
     "typescript": "^5.5.3",
