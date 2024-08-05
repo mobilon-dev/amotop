@@ -6,6 +6,7 @@ const accessToken = 'IwYy02Nzk0ZmRiNDZhMjUiLCJqdGkiOiIyYzU3OTJkNjRlODFiOGViMDIwY
 
 const scopeId = 'scopeId';
 
+const channelId = '';
 const channelSecret = '';
 const channelBotId = '';
 
