@@ -20,6 +20,13 @@
 [Как добавить задачу в amoCRM?](getTasks.js)
 
 
+#### chat API
+
+[Как подключить канал чата к аккаунту?](chats/connectAccount.js)
+
+[Как отправить сообщение в чат?](chats/generateTextConversation.js)
+
+
 #### file API
 
 [Как просто загрузить файл в amoCRM?](files/uploadFile.js)
