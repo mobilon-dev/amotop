@@ -1135,4 +1135,50 @@ export class AmoApiClient {
     const url = `/api/v4/leads/unsorted/${uid}`;
     return (await this.axios.get(url)).data;
   }
+
+  /**
+  * @group Unsorted
+  * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-add-sip
+  */
+  async addUnsortedSip (data: any) {
+    const url = `/api/v4/leads/unsorted/sip`;
+    return (await this.axios.post(url, data)).data;
+  }
+
+  /**
+  * @group Unsorted
+  * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-add-form
+  */
+  async addUnsortedForms (data: any) {
+    const url = `/api/v4/leads/unsorted/forms`;
+    return (await this.axios.post(url, data)).data;
+  }
+
+  /**
+  * @group Unsorted
+  * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-add-form
+  */
+  async acceptUnsorted (uid: string, userId: number, statusId: number) {
+    const url = `/api/v4/leads/unsorted/${uid}/accept`;
+    return (await this.axios.post(url, {user_id: userId, status_id: statusId})).data;
+  }
+
+  /**
+  * @group Unsorted
+  * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-decline
+  */
+  async declineUnsorted (uid: string, userId?: number) {
+    const data = userId ? {user_id: userId} : null;
+    const url = `/api/v4/leads/unsorted/${uid}/decline`;
+    return (await this.axios.delete(url, {data})).data;
+  }
+
+  /**
+  * @group Unsorted
+  * @see https://www.amocrm.ru/developers/content/crm_platform/unsorted-api#unsorted-link
+  */
+  async linkUnsorted (uid: string, data: any) {    
+    const url = `/api/v4/leads/unsorted/${uid}/link`;
+    return (await this.axios.post(url, data)).data;
+  }
 }
