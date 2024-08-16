@@ -16,7 +16,7 @@ const start = async () => {
         form_name: 'Форма обратной связи на сайте',
         form_page: '/feedback',
         ip: '127.0.0.1',
-        form_sent_at: Math.floor(new Date('2023-01-01').getTime() / 1000),
+        form_sent_at: Math.floor(new Date().getTime() / 1000),
         referer: 'http://google.com',
       },
     };
