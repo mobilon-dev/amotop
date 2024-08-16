@@ -323,6 +323,15 @@ export class AmoApiClient {
   }
 
   /**
+  * @group Leads
+  * @see https://www.amocrm.ru/developers/content/crm_platform/leads-api#leads-edit
+  */
+  async updateLead (data: any) {
+    const url = `/api/v4/leads`;
+    return (await this.axios.patch(url, data)).data;
+  }
+
+  /**
   * syntax sugar {@link addCustomFields}
   * @group Leads
   */
