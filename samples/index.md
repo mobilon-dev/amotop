@@ -1,7 +1,7 @@
 
 ## Примеры @mobilon-dev/amotop
 
-### Неразобранное
+#### Неразобранное
 
 [Как получить неразобранное amoCRM?](unsorted/getUnsorted.js)
 
@@ -10,17 +10,17 @@
 [Как добавить неразобранное типа звонок?](unsorted/addUnsortedSip.js)
 
 
-### Сделки
+#### Сделки
 
 [Как добавить сделку в amoCRM?](addLead.js)
 
 [Как добавить тысячу сделок в amoCRM?](addThousandLeads.js)
 
+[Как получить все сделки из amoCRM?](getAllLeads.js)
+
 [Как добавить custom field контакту в amoCRM?](addField.js)
 
 [Как получить все контакты из amoCRM?](getAllContacts.js)
-
-[Как получить все сделки из amoCRM?](getAllLeads.js)
 
 [Как получить воронки и этапы воронок из amoCRM?](getPipelines.js)
 
