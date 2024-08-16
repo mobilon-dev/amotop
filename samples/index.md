@@ -1,7 +1,16 @@
 
-### Примеры @mobilon-dev/amotop
+## Примеры @mobilon-dev/amotop
 
-[Как получить неразобранное amoCRM?](getUnsorted.js)
+### Неразобранное
+
+[Как получить неразобранное amoCRM?](unsorted/getUnsorted.js)
+
+[Как добавить неразобранное типа форма?](unsorted/addUnsortedForm.js)
+
+[Как добавить неразобранное типа звонок?](unsorted/addUnsortedSip.js)
+
+
+### Сделки
 
 [Как добавить сделку в amoCRM?](addLead.js)
 
@@ -32,3 +41,4 @@
 [Как просто загрузить файл в amoCRM?](files/uploadFile.js)
 
 [Как загрузить файл в сделку amoCRM?](files/uploadFileToLead.js)
+
