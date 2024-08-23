@@ -332,6 +332,15 @@ export class AmoApiClient {
   }
 
   /**
+    * @group Leads
+    * @see https://www.amocrm.ru/developers/content/crm_platform/leads-api#leads-edit
+    */
+  async getLossReasons () {
+    const url = `/api/v4/leads/loss_reasons`;
+    return (await this.axios.get(url)).data;
+  }
+
+  /**
   * syntax sugar {@link addCustomFields}
   * @group Leads
   */

@@ -18,6 +18,8 @@
 
 [Как получить все сделки из amoCRM?](getAllLeads.js)
 
+[Как получить список причин отказа с описанием?](getLossReasons.js)
+
 [Как добавить custom field контакту в amoCRM?](addField.js)
 
 [Как получить все контакты из amoCRM?](getAllContacts.js)
