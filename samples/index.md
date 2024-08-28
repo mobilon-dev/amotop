@@ -30,6 +30,7 @@
 
 [Как добавить задачу в amoCRM?](getTasks.js)
 
+[Как получить все поля с вариантами?](getCustomFields.js)
 
 #### chat API
 
