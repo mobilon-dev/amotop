@@ -17,6 +17,8 @@
 
 - [Видео: amoCRM chat API](https://youtu.be/f31UVtn7EJI)
 
+- [Видео: amoCRM file API](https://youtu.be/3DLbkBt7kHw)
+
 
 ## Зачем?
 
