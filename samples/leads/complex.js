@@ -9,11 +9,12 @@ const phone = '79135292926';
 
 const start = async () => {
   try {
-
+    // получаем список контактов
     let response = await amoApiClient.getContacts({with: 'leads', query: phone});
     console.log('response', JSON.stringify(response, null, 2));
 
     if(response === "") {
+      // если список пустой, то добавляем контакт
       const contactPayload = amoApiClient.getContactPayload('test', phone);
       console.log('contact payload', contactPayload);
 
@@ -25,7 +26,7 @@ const start = async () => {
     }
 
     const contact = response._embedded.contacts[0];
-    // просто передаем объект сделки
+    // к сделке добавляем id контакта
     const lead1 = {
       name: 'Продать слона',
       price: 1000,
@@ -37,9 +38,9 @@ const start = async () => {
     };
     console.log('lead payload', lead1);
 
+    // добавляем сделку в amoCRM
     const leadResponse1 = await amoApiClient.addLead(lead1);
     console.log('leadResponse', JSON.stringify(leadResponse1, null, 2));
-
   } catch (err) {
     const errMessage = err.response?.data ? JSON.stringify(err.response.data, null, 2) : err;
     console.log('err', errMessage);
