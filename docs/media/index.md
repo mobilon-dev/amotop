@@ -12,11 +12,28 @@
 
 #### Сделки
 
-[Как добавить сделку в amoCRM?](addLead.js)
+[Как добавить сделку в amoCRM?](leads/addLead.js)
 
-[Как добавить тысячу сделок в amoCRM?](addThousandLeads.js)
+[Как добавить тысячу сделок в amoCRM?](leads/addThousandLeads.js)
 
-[Как получить все сделки из amoCRM?](getAllLeads.js)
+[Как получить сделки из amoCRM?](leads/getLeads.js)
+
+[Как получить все сделки из amoCRM?](leads/getAllLeads.js)
+
+[Как добавить сделку к нужному контакту?](leads/complex.js)
+
+
+#### Контакты
+
+[Как добавить контакт?](addContact.js)
+
+
+#### Компании
+
+[Как добавить компанию?](addCompany.js)
+
+
+#### Прочее
 
 [Как получить список причин отказа с описанием?](getLossReasons.js)
 
@@ -29,6 +46,8 @@
 [Как получить все типы задач в amoCRM?](getAccountTaskTypes.js)
 
 [Как добавить задачу в amoCRM?](getTasks.js)
+
+[Как получить все поля с вариантами?](getCustomFields.js)
 
 
 #### chat API

@@ -16,6 +16,7 @@ import {
   GetTalkParams,
   AddTagParams,
   Contact,
+  Company,
 } from './interfaces';
 
 export class AmoApiClient {
@@ -295,7 +296,7 @@ export class AmoApiClient {
 
   /**
   * syntax sugar {@link getCustomFieldsByEntityType}
-  * @group Companies
+  * @group Leads
   */
   async getLeadsCustomFields (paramsIn: any) {
     const page = paramsIn?.page ? paramsIn?.page : 1;
@@ -688,6 +689,14 @@ export class AmoApiClient {
     const paramWith = params?.leads ? 'leads' : null;
     const url = `/api/v4/companies/${companyId}?with=${paramWith}`;
     return (await this.axios.get(url)).data;
+  }
+
+  /**
+  * @group Companies
+  */
+  async addCompany (company: Company) {
+    const url = `/api/v4/companies`;
+    return (await this.axios.post(url, [company])).data;
   }
 
   /**
