@@ -1,7 +1,5 @@
 export interface SendRequestOptions {
-  data: {
-    account_id: string,
-    title?: string,
-    hook_api_version?: string,
-  }
+  data?: Record<string, unknown>,
+  headers?: Record<string, string>,
+  params?: Record<string, string | number | boolean>,
 }

@@ -3,5 +3,5 @@ export interface AmoJoChannelClientOptions {
   debug?: boolean,
   channelSecret: string,
   channelId: string,
-  timeout?: number | 10000,
+  timeout?: number,
 }
