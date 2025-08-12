@@ -5,15 +5,15 @@ export interface Company {
   updated_by?: number;
   created_at?: number;
   updated_at?: number;
-  custom_fields_values?: [{
+  custom_fields_values?: {
     field_name: string;
     field_code: string;
     field_type: string;
-    values: [{
+    values: {
       value: string;
-    }],
-  }],
-  _embedded: object;
-  tags_to_add?: any[];
+    }[];
+  }[];
+  _embedded?: Record<string, unknown>;
+  tags_to_add?: unknown[];
   request_id?: string;
 }
