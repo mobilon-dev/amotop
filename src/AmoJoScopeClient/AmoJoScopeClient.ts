@@ -14,10 +14,10 @@ import {
 } from './interfaces/index';
 
 export class AmoJoScopeClient {
-  instance: AxiosInstance;
-  amoChatDomain: string;
-  scopeId: string;
-  channelSecret: string;
+  private readonly instance: AxiosInstance;
+  private readonly amoChatDomain: string;
+  private readonly scopeId: string;
+  private readonly channelSecret: string;
 
   constructor(options: AmoJoScopeClientOptions) {
     this.amoChatDomain = options.amoChatDomain ? options.amoChatDomain : 'amojo.amocrm.ru';
@@ -55,7 +55,16 @@ export class AmoJoScopeClient {
     }
   }
 
-  private async sendRequest(method: string, url: string, options?: any) {
+  // Геттеры для публичного доступа к необходимым свойствам
+  getScopeId(): string {
+    return this.scopeId;
+  }
+
+  getAmoChatDomain(): string {
+    return this.amoChatDomain;
+  }
+
+  private async sendRequest(method: string, url: string, options?: { data?: unknown }) {
     const content = options && options.data ? options.data : '';
     const bodyContent = (content === '') ? '' : JSON.stringify(content);
 
@@ -83,11 +92,11 @@ export class AmoJoScopeClient {
     return response.data;
   }
 
-  private createSignatureForRequestBody(body: string) {    
+  private createSignatureForRequestBody(body: string): string {    
     return createHmac('sha1', this.channelSecret).update(body).digest('hex');
   }
 
-  private createCheckSum(method: string, bodyContent: string) {
+  private createCheckSum(method: string, bodyContent: string): string {
     const body = (method.toLowerCase() === 'get') ? '' : bodyContent;
     return createHash('md5').update(body).digest('hex');
   }
@@ -103,11 +112,11 @@ export class AmoJoScopeClient {
     };
   }
 
-  async createChat(chatDto: any) {
+  async createChat(chatDto: Record<string, unknown>) {
     return await this.sendRequest('POST', `/${this.scopeId}/chats`, {data: chatDto});
   }
 
-  async sendMessage(payload: any) {
+  async sendMessage(payload: Record<string, unknown>) {
     const data = {
       event_type: 'new_message',
       payload,
@@ -131,10 +140,7 @@ export class AmoJoScopeClient {
     return await this.sendRequest('POST', `/${this.scopeId}/${msgid}/delivery_status`, {data});
   }
 
-
-
-
-  private getSenderReceiverFromBot (params: any) {
+  private getSenderReceiverFromBot (params: { channelBotId: string }) {
     return {
       sender: {
         id: randomUUID(),
@@ -155,7 +161,7 @@ export class AmoJoScopeClient {
     }
   }
 
-  private getSilent (silent: boolean | null) {
+  private getSilent (silent: boolean | null): Record<string, boolean> | null {
     return silent ? { silent: true, } : null;
   }
 
@@ -176,7 +182,7 @@ export class AmoJoScopeClient {
     };
   }
 
-  private getSource (sourceExternalId: string | null) {
+  private getSource (sourceExternalId: string | null): Record<string, { external_id: string }> | null {
     return sourceExternalId ? {
       source: {
         external_id: sourceExternalId,
@@ -184,7 +190,7 @@ export class AmoJoScopeClient {
     } : null;
   }
 
-  private getSenderRecieverFromUser(params: any) {
+  private getSenderRecieverFromUser(params: { amojoUserId: string }) {
     return {
       sender: {
         id: randomUUID(),
@@ -198,7 +204,7 @@ export class AmoJoScopeClient {
     }
   }
 
-  private getSenderReceiverFromContact(params: any) {
+  private getSenderReceiverFromContact(params: { senderName: string }) {
     return {
       sender: {
         id: randomUUID(),
@@ -207,11 +213,11 @@ export class AmoJoScopeClient {
     };
   }
 
-  private getQuoteSender (params: any) {
+  private getQuoteSender (params: { senderName: string }) {
     return this.getSenderReceiverFromContact(params);
   }
 
-  private getTextMessage (params: any) {
+  private getTextMessage (params: { message: string }) {
     return {
       message: {
         type: 'text',
@@ -220,7 +226,7 @@ export class AmoJoScopeClient {
     };
   }
 
-  private getImageMessage (params: any) {
+  private getImageMessage (params: { message?: string; mediaUrl: string }) {
     return {
       message: {
         type: 'picture',
@@ -230,7 +236,7 @@ export class AmoJoScopeClient {
     }
   }
 
-  private getVideoMessage (params: any) {
+  private getVideoMessage (params: { message?: string; mediaUrl: string }) {
     return {
       message: {
         type: 'video',
@@ -240,7 +246,7 @@ export class AmoJoScopeClient {
     }
   }
 
-  private getAudioMessage (params: any) {
+  private getAudioMessage (params: { message?: string; mediaUrl: string }) {
     return {
       message: {
         type: 'voice',
@@ -250,51 +256,70 @@ export class AmoJoScopeClient {
     }
   }
 
-
   /**
   * @group Payloads Text
   */
-  getTextPayloadFromBot (params: TextPayloadFromBotParams) {    
-    return {
+  getTextPayloadFromBot (params: TextPayloadFromBotParams): Record<string, unknown> {    
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderReceiverFromBot({channelBotId: params.channelBotId}),
       ...this.getTextMessage({message: params.message}),
     };
-  }
 
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
+  }
 
   /**
   * @group Payloads Text
   */
-  getTextPayloadFromUser (params: TextPayloadFromUserParams): any {
-    return {
+  getTextPayloadFromUser (params: TextPayloadFromUserParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderRecieverFromUser({amojoUserId: params.amojoUserId}),
       ...this.getTextMessage({message: params.message}),
     };
+
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
   }
 
   /**
   * @group Payloads Text
   */
-  getTextPayloadFromContact (params: TextPayloadFromContactParams) {
-    return {
+  getTextPayloadFromContact (params: TextPayloadFromContactParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderReceiverFromContact({senderName: params.senderName}),
       ...this.getTextMessage({message: params.message}),
     };
+
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
   }
 
-  getQuoteTextMessage (params: any) {
+  getQuoteTextMessage (params: { message: string; senderName: string }): Record<string, unknown> {
     return {
       reply_to: {
         message: {
@@ -306,7 +331,7 @@ export class AmoJoScopeClient {
     }
   }
 
-  getQuoteImageMessage (params: any) {
+  getQuoteImageMessage (params: { mediaUrl: string; senderName: string }): Record<string, unknown> {
     return {
       reply_to: {
         message: {
@@ -321,7 +346,7 @@ export class AmoJoScopeClient {
     }
   }
 
-  getQuoteVideoMessage (params: any) {
+  getQuoteVideoMessage (params: { mediaUrl: string; senderName: string }): Record<string, unknown> {
     return {
       reply_to: {
         message: {
@@ -339,130 +364,189 @@ export class AmoJoScopeClient {
   /**
   * @group Payloads Image
   */
-  getImagePayloadFromBot (params: ImagePayloadFromBotParams) {
-    return {
+  getImagePayloadFromBot (params: ImagePayloadFromBotParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderReceiverFromBot({channelBotId: params.channelBotId}),
       ...this.getImageMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
+
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
   }
 
   /**
   * @group Payloads Image
   */
-  getImagePayloadFromUser (params: ImagePayloadFromUserParams): any {
-    return {
+  getImagePayloadFromUser (params: ImagePayloadFromUserParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderRecieverFromUser({amojoUserId: params.amojoUserId}),
       ...this.getImageMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-  }
 
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
+  }
 
   /**
   * @group Payloads Image
   */
-  getImagePayloadFromContact (params: ImagePayloadFromContactParams) {
-    return {
+  getImagePayloadFromContact (params: ImagePayloadFromContactParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderReceiverFromContact({senderName: params.senderName}),      
       ...this.getImageMessage({message: params.message, mediaUrl: params.mediaUrl}),      
     };
+
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
   }
 
   /**
   * @group Payloads Video
   */
-  getVideoPayloadFromBot (params: ImagePayloadFromBotParams) {
-    return {
+  getVideoPayloadFromBot (params: ImagePayloadFromBotParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderReceiverFromBot({channelBotId: params.channelBotId}),
       ...this.getVideoMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
+
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
   }
 
   /**
   * @group Payloads Video
   */
-  getVideoPayloadFromUser (params: ImagePayloadFromUserParams): any {
-    return {
+  getVideoPayloadFromUser (params: ImagePayloadFromUserParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderRecieverFromUser({amojoUserId: params.amojoUserId}),
       ...this.getVideoMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-  }
 
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
+  }
 
   /**
   * @group Payloads Video
   */
-  getVideoPayloadFromContact (params: ImagePayloadFromContactParams) {
-    return {
+  getVideoPayloadFromContact (params: ImagePayloadFromContactParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderReceiverFromContact({senderName: params.senderName}),      
       ...this.getVideoMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
+
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
   }
 
   /**
   * @group Payloads Audio
   */
-  getAudioPayloadFromBot (params: ImagePayloadFromBotParams) {
-    return {
+  getAudioPayloadFromBot (params: ImagePayloadFromBotParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderReceiverFromBot({channelBotId: params.channelBotId}),
       ...this.getAudioMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
+
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
   }
 
   /**
   * @group Payloads Audio
   */
-  getAudioPayloadFromUser (params: ImagePayloadFromUserParams): any {
-    return {
+  getAudioPayloadFromUser (params: ImagePayloadFromUserParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderRecieverFromUser({amojoUserId: params.amojoUserId}),
       ...this.getAudioMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-  }
 
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
+  }
 
   /**
   * @group Payloads Audio
   */
-  getAudioPayloadFromContact (params: ImagePayloadFromContactParams) {
-    return {
+  getAudioPayloadFromContact (params: ImagePayloadFromContactParams): Record<string, unknown> {
+    const basePayload = {
       ...this.getMessageIdAndDate(),
-      ...this.getSilent(params.silent),
-      ...this.getSource(params.sourceExternalId),
       ...this.getConversationIds(params.conversationId),
       ...this.getSenderReceiverFromContact({senderName: params.senderName}),
       ...this.getAudioMessage({message: params.message, mediaUrl: params.mediaUrl}),
     };
-  }
 
+    const silent = this.getSilent(params.silent);
+    const source = this.getSource(params.sourceExternalId);
+
+    return {
+      ...basePayload,
+      ...(silent || {}),
+      ...(source || {}),
+    };
+  }
 }
