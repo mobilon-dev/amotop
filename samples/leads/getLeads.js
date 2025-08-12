@@ -1,7 +1,7 @@
 // const {AmoApiClient} = require('@mobilon/amotop');
-const {AmoApiClient} = require('../dist');
+const {AmoApiClient} = require('../../dist');
 
-const {domain, accessToken, debug} = require('./_config');
+const {domain, accessToken, debug} = require('../_config');
 
 const amoApiClient = new AmoApiClient(domain, accessToken, {debug});
 
