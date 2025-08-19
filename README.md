@@ -1,101 +1,216 @@
 # @mobilon-dev/amotop
 
-@mobilon-dev/amotop - еще один amoCRM API клиент для node.js
+[![npm version](https://badge.fury.io/js/%40mobilon-dev%2Famotop.svg)](https://badge.fury.io/js/%40mobilon-dev%2Famotop)
+[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)
 
-- [Репозиторий](https://github.com/mobilon-dev/amotop)
+Полнофункциональный TypeScript клиент для работы с amoCRM API, включающий поддержку основного API, Chat API, File API и OAuth 2.0 аутентификации.
 
-- [Документация](https://mobilon-dev.github.io/amotop/)
+## 📚 Документация
 
-- [Примеры](samples/index.md)
+- [📖 Полная документация](https://mobilon-dev.github.io/amotop/)
+- [💡 Примеры использования](samples/index.md)
+- [🔗 Репозиторий](https://github.com/mobilon-dev/amotop)
 
+## 🎥 Видеоуроки
 
-## Видео
+- [🎬 Знакомство с @mobilon-dev/amotop](https://youtu.be/zRlO7e41bwg)
+- [🔐 amoCRM OAuth 2.0](https://youtu.be/CxQcB5AsyHI)
+- [💬 amoCRM Chat API](https://youtu.be/f31UVtn7EJI)
+- [📁 amoCRM File API](https://youtu.be/3DLbkBt7kHw)
 
-- [Видео: Знакомство с @mobilon-dev/amotop](https://youtu.be/zRlO7e41bwg)
+## ✨ Особенности
 
-- [Видео: amoCRM oAuth 2.0](https://youtu.be/CxQcB5AsyHI)
+- **🚀 Простота использования** - Интуитивно понятный API с подробным логированием
+- **🔧 TypeScript поддержка** - Полная типизация для лучшего DX
+- **📊 Подробное логирование** - Все запросы и ответы логируются для отладки
+- **💬 Chat API интеграция** - Работа с чатами amoCRM
+- **📁 File API поддержка** - Загрузка и управление файлами
+- **🔐 OAuth 2.0** - Безопасная аутентификация
+- **📝 Webhook поддержка** - Работа с вебхуками amoCRM
 
-- [Видео: amoCRM chat API](https://youtu.be/f31UVtn7EJI)
+## 🛠 Установка
 
-- [Видео: amoCRM file API](https://youtu.be/3DLbkBt7kHw)
+```bash
+npm install @mobilon-dev/amotop
+```
 
+## 🚀 Быстрый старт
 
-## Зачем?
+### 1. Настройка конфигурации
 
-Простой клиент-обертка на API amoCRM, чтобы помочь коллеге быстро разобраться с концепцией amoCRM и начать приносить пользу.
+Создайте файл конфигурации `config.js`:
 
+```javascript
+module.exports = {
+  domain: 'your-domain.amocrm.ru',
+  accessToken: 'your-access-token',
+  scopeId: 'your-scope-id',
+  channelSecret: 'your-channel-secret',
+  debug: true
+};
+```
 
-## Преимущества
+### 2. Базовое использование
 
-- Прост в понимании, легок в использовании
+```javascript
+const { AmoApiClient, AmoJoScopeClient } = require('@mobilon-dev/amotop');
 
-- Логирует все запросы (request/responsе)
+const config = require('./config');
 
-- Работает с API чатов amoCRM
+// Инициализация клиентов
+const amoApiClient = new AmoApiClient(config.domain, config.accessToken, { debug: config.debug });
+const amoJoScopeClient = new AmoJoScopeClient({
+  scopeId: config.scopeId, 
+  channelSecret: config.channelSecret, 
+  debug: config.debug
+});
 
+// Получение сделок
+const leads = await amoApiClient.getLeads({ limit: 20 });
 
-## Установка
-
-`````
-npm i @mobilon-dev/amotop
-
-`````
-
-## Использование
-
-`````javascript
-
-const {AmoJoScopeClient, AmoApiClient} = require('@mobilon-dev/amotop');
-
-const {debug, scopeId, channelSecret, domain, accessToken} = require('../_config');
-
-const amoJoScopeClient = new AmoJoScopeClient({scopeId, channelSecret, debug});
-const amoApiClient = new AmoApiClient(domain, accessToken, {debug});
-
-// получаем сделки
-const leads = await amoApiClient.getLeads({limit: 20});
-
-// отправляем сообщение в чат
+// Отправка сообщения в чат
+const message = {
+  text: 'Привет! Это тестовое сообщение.',
+  source: 'bot'
+};
 const response = await amoJoScopeClient.sendMessage(message);
+```
 
-/*
-логи
+## 🏗 Архитектура
 
-[AmoApiClient][Request] GET https://mobilonchatitest6.amocrm.ru/api/v4/leads?page=1&limit=20
-[AmoApiClient][Response] GET https://mobilonchatitest6.amocrm.ru/api/v4/leads?page=1&limit=20 200:OK {"_page":1,"_links":{"self":{"href":"https://mobilonchatitest6.amocrm.ru/api/v4/leads?page=1&limit=20"}},"_embedded":{"leads":[{"id":4214965,"name":"Продать стул","price":10000,"responsible_user_id":886363,"group_id":0,"status_id":64831342,"pipeline_id":7883550,"loss_reason_id":null,"created_by":886363,"updated_by":886363,"created_at":1709609319,"updated_at":1709692894,"closed_at":null,"closest_task_at":null,"is_deleted":false,"custom_fields_values":null,"score":null,"account_id":31612010,"labor_cost":null,"_links":{"self":{"href":"https://mobilonchatitest6.amocrm.ru/api/v4/leads/4214965?page=1&limit=20"}},"_embedded":{"tags":[],"companies":[]}}]}}
+![Архитектура проекта](images/scheme.jpg)
 
-*/
-`````
+### Основные компоненты
 
-## Концепция
+| Компонент | Назначение | Конфигурация |
+|-----------|------------|--------------|
+| **AmoService** | Обмен токенов OAuth 2.0 | `domain` |
+| **AmoApiClient** | Основной API amoCRM | `domain`, `accessToken` |
+| **AmoFileClient** | File API amoCRM | `accessToken` |
+| **AmoJoChannelClient** | Управление каналами Chat API | `channelId`, `channelSecret` |
+| **AmoJoScopeClient** | Работа с подключениями чатов | `scopeId`, `channelSecret` |
 
-![](images/scheme.jpg)
+## 📋 Примеры использования
 
-### AmoService (domain)
+### Работа со сделками
 
-- для обмена токенов
+```javascript
+// Добавление сделки
+const lead = {
+  name: 'Продать слона',
+  price: 1000,
+  ...amoApiClient.getPipelineLeadPayload(7183562, 60002878)
+};
+const newLead = await amoApiClient.addLead(lead);
 
-### AmoApiClient (domain, accessToken)
+// Получение сделок с фильтрацией
+const leads = await amoApiClient.getLeads({
+  limit: 50,
+  filter: {
+    responsible_user_id: [12345]
+  }
+});
+```
 
-- для взаимодействия с AmoCRM API
+### Работа с контактами
 
-### AmoFileClient (accessToken)
+```javascript
+// Добавление контакта
+const contact = {
+  name: 'Иван Иванов',
+  phone: '+79001234567',
+  email: 'ivan@example.com'
+};
+const newContact = await amoApiClient.addContact(contact);
 
-- для взаимодействия с File API AmoCRM
+// Получение всех контактов
+const contacts = await amoApiClient.getAllContacts();
+```
 
-### AmoJoChannelClient (channelId, channelSecret)
+### Работа с чатами
 
-- для работы с каналом Чат API AmoCRM: создавать/удалять подключения
+```javascript
+// Отправка текстового сообщения
+await amoJoScopeClient.sendTextMessage({
+  text: 'Привет! Чем могу помочь?',
+  source: 'bot'
+});
 
-### AmoJoScopeClient (scopeId, channelSecret)
+// Отправка изображения
+await amoJoScopeClient.sendImageMessage({
+  image: 'https://example.com/image.jpg',
+  caption: 'Описание изображения',
+  source: 'bot'
+});
+```
 
-- для работы с конкретным подключением чата к интеграции Чат API AmoCRM
+### Работа с файлами
 
+```javascript
+const { AmoFileClient } = require('@mobilon-dev/amotop');
 
-## amoCRM API
+const fileClient = new AmoFileClient(accessToken, { debug: true });
 
-[amo API](https://www.amocrm.ru/developers/content/crm_platform/api-reference)
+// Загрузка файла
+const uploadResult = await fileClient.uploadFile({
+  file: './document.pdf',
+  name: 'document.pdf'
+});
 
-[chat API](https://www.amocrm.ru/developers/content/chats/chat-api-reference)
+// Привязка файла к сделке
+await amoApiClient.attachFileToLead(leadId, uploadResult.id);
+```
 
-[files API](https://www.amocrm.ru/developers/content/files/files-capabilities)
+## 🔧 Настройка OAuth 2.0
+
+```javascript
+const { AmoService } = require('@mobilon-dev/amotop');
+
+const amoService = new AmoService('your-domain.amocrm.ru');
+
+// Получение URL для авторизации
+const authUrl = amoService.getAuthUrl({
+  clientId: 'your-client-id',
+  redirectUri: 'your-redirect-uri',
+  state: 'random-state'
+});
+
+// Обмен кода на токен
+const tokens = await amoService.exchangeCode({
+  clientId: 'your-client-id',
+  clientSecret: 'your-client-secret',
+  code: 'authorization-code',
+  redirectUri: 'your-redirect-uri'
+});
+```
+
+## 📊 Логирование
+
+Библиотека автоматически логирует все запросы и ответы при включенном режиме debug:
+
+```
+[AmoApiClient][Request] GET https://domain.amocrm.ru/api/v4/leads?page=1&limit=20
+[AmoApiClient][Response] GET https://domain.amocrm.ru/api/v4/leads?page=1&limit=20 200:OK
+```
+
+## 🔗 Полезные ссылки
+
+- [📖 amoCRM API документация](https://www.amocrm.ru/developers/content/crm_platform/api-reference)
+- [💬 Chat API документация](https://www.amocrm.ru/developers/content/chats/chat-api-reference)
+- [📁 Files API документация](https://www.amocrm.ru/developers/content/files/files-capabilities)
+
+## 🤝 Поддержка
+
+Если у вас есть вопросы или предложения:
+
+1. Создайте [Issue](https://github.com/mobilon-dev/amotop/issues) в репозитории
+2. Изучите [примеры](samples/index.md) для решения типичных задач
+3. Обратитесь к [документации](https://mobilon-dev.github.io/amotop/)
+
+## 📄 Лицензия
+
+ISC License - см. файл [LICENSE](LICENSE) для подробностей.
+
+---
+
+**Создано с ❤️ для упрощения работы с amoCRM API**
